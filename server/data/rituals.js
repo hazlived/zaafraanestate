@@ -67,6 +67,76 @@ const ritualsData = [
       'Stir in ghee and rose water.',
       'Drizzle in concentric circles over par-boiled basmati rice right before sealing the pot for dum cooking.'
     ]
+  },
+  {
+    id: 'kashmiri-phirni',
+    title: 'Kashmiri Saffron Phirni',
+    subtitle: 'Creamy ground rice pudding slow-simmered with cardamom, bloomed Mongra threads, and rose water in earthenware pots.',
+    prepTime: '25 mins',
+    bloomTemp: '80°C (176°F)',
+    threads: '10-12 Threads',
+    image: '/images/tin_package.png',
+    description: 'A legendary Kashmiri dessert traditionally served in porous clay bowls (shora). Saffron infuses the ground rice cream with rich golden color and a fragrant floral aroma.',
+    ingredients: [
+      '10-12 Grade I Mongra Saffron Threads',
+      '500ml Whole Milk',
+      '3 tbsp Basmati Rice (soaked 30 mins & coarsely ground)',
+      '4 tbsp Sugar or Condensed Milk',
+      '1/4 tsp Crushed Cardamom Seeds',
+      'Slivered Almonds & Pistachios for garnish'
+    ],
+    steps: [
+      'Steep crushed saffron in 2 tbsp of warm milk for 15 minutes.',
+      'Bring 500ml milk to a boil in a heavy-bottomed pan, then lower heat.',
+      'Add coarsely ground rice paste slowly while stirring continuously to avoid lumps.',
+      'Simmer for 15 minutes until thick, then mix in sugar, cardamom, and the golden saffron elixir.',
+      'Pour into earthenware bowls, garnish with slivered nuts, and chill in refrigerator for 2 hours before serving.'
+    ]
+  },
+  {
+    id: 'shahi-tukda-saffron',
+    title: 'Zaafraan Shahi Tukda',
+    subtitle: 'Crispy ghee-fried bread steeped in saffron cardamom syrup and topped with rich saffron rabri.',
+    prepTime: '30 mins',
+    bloomTemp: '75°C (167°F)',
+    threads: '12-15 Threads',
+    image: '/images/hero_saffron.png',
+    description: 'An imperial royal dessert from Mughlai kitchens. Triangle toast pieces golden-fried in pure ghee, submerged in saffron-infused syrup, and layered with thick saffron cream.',
+    ingredients: [
+      '12-15 Grade I Mongra Saffron Threads',
+      '4 Slices Milk Bread (crusts cut, sliced into triangles)',
+      '3 tbsp Pure Desi Ghee for frying',
+      '1/2 cup Sugar & 1/2 cup Water for syrup',
+      '250ml Heavy Cream / Condensed Rabri',
+      'Crushed Cardamom & Silver Leaf (Vark)'
+    ],
+    steps: [
+      'Grind saffron threads and steep in 3 tbsp warm water to create concentrated saffron syrup.',
+      'Boil sugar and water to a single-thread consistency syrup, then stir in half of the bloomed saffron.',
+      'Golden fry bread triangles in ghee until crisp, then dip each piece in warm saffron syrup for 1 minute.',
+      'Arrange on a platter, pour saffron rabri over the top, and garnish with crushed nuts and silver leaf.'
+    ]
+  },
+  {
+    id: 'saffron-lemon-elixir',
+    title: 'Morning Saffron & Honey Elixir',
+    subtitle: 'Revitalizing morning tonic with warm water, organic raw honey, lemon juice, and 4 bloomed Mongra threads.',
+    prepTime: '5 mins',
+    bloomTemp: '70°C (158°F)',
+    threads: '4 Threads per glass',
+    image: '/images/kahwa_infusion.png',
+    description: 'A clean, rejuvenating morning ritual that boosts metabolism, enhances skin glow, and elevates mood naturally.',
+    ingredients: [
+      '4 Grade I Mongra Saffron Threads',
+      '250ml Warm Water (70°C)',
+      '1 tbsp Raw Organic Wildflower Honey',
+      '1 tbsp Freshly Squeezed Lemon Juice'
+    ],
+    steps: [
+      'Crush saffron threads between fingers and steep in 250ml warm water for 5 minutes.',
+      'Stir in raw wildflower honey and fresh lemon juice until completely dissolved.',
+      'Sip slowly on an empty stomach every morning for natural energy and warmth.'
+    ]
   }
 ];
 

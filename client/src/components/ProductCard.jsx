@@ -21,7 +21,7 @@ export const ProductCard = ({ product }) => {
   return (
     <article className={`product-card ${!isInStock ? 'is-out-of-stock' : ''}`}>
       <span className={`product-badge ${!isInStock ? 'badge-sold-out' : ''}`}>
-        {isInStock ? (product.badge || 'GI Tagged Grade I') : 'Out of Stock'}
+        {isInStock ? (product.badge || 'Pure Grade I Mongra') : 'Out of Stock'}
       </span>
 
       <div className="product-image-wrap">

@@ -1,8 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ShieldCheck, Award, MapPin, Sparkles } from 'lucide-react';
+import { Sun, Sparkles, Flame, PackageCheck, ShieldCheck, MapPin } from 'lucide-react';
 
 export const StoryPage = () => {
+  const steps = [
+    {
+      num: '01',
+      title: 'Dawn Picking',
+      text: 'Flowers plucked strictly between 5:00 AM and 8:00 AM before sunlight opens the petals and degrades volatiles.',
+      icon: <Sun size={22} />
+    },
+    {
+      num: '02',
+      title: 'Manual Stigma Separation',
+      text: 'Master artisans strip the three crimson Mongra stigmas from yellow floral stalks by hand with surgical precision.',
+      icon: <Sparkles size={22} />
+    },
+    {
+      num: '03',
+      title: 'Birch Charcoal Curing',
+      text: 'Stigmas are gently toasted over slow birch embers in traditional wicker baskets to maintain 8-9% ideal moisture.',
+      icon: <Flame size={22} />
+    },
+    {
+      num: '04',
+      title: 'Sealed Brass Packaging',
+      text: 'Airtight brass tins protect fragile stigmas from light, humidity, and atmospheric oxidation.',
+      icon: <PackageCheck size={22} />
+    }
+  ];
+
   return (
     <main className="page-shell">
       {/* Story Hero */}
@@ -18,7 +45,7 @@ export const StoryPage = () => {
           </p>
           <div className="hero-actions">
             <a href="#craft-timeline" className="btn btn-primary">Explore 4-Step Craft</a>
-            <Link to="/quality" className="btn btn-outline">Spectrophotometer Ratings</Link>
+            <Link to="/shop" className="btn btn-outline">Shop 2025 Harvest</Link>
           </div>
         </div>
 
@@ -27,10 +54,10 @@ export const StoryPage = () => {
         </div>
       </section>
 
-      {/* Terroir & Biochemical Specs */}
+      {/* Terroir & Specs */}
       <section style={{ padding: 'var(--space-12) 0', borderTop: 'var(--glass-border)' }}>
         <div style={{ maxWidth: '48rem', margin: '0 auto', textAlign: 'center', marginBottom: 'var(--space-10)' }}>
-          <p className="section-label">GI Tagged Terroir</p>
+          <p className="section-label">Pampore Terroir</p>
           <h2 className="section-title">Why Kashmiri Saffron is Matchless</h2>
           <p style={{ color: 'var(--color-text-muted)' }}>
             Unlike Mediterranean or Iranian crops, Kashmiri <em>Crocus sativus L.</em> features thick, dark maroon stigmas with trumpet flared tips. Nurtured by iron-rich Karewa clay along the Jhelum river basin, it produces the highest natural concentration of Crocin pigment globally.
@@ -53,80 +80,30 @@ export const StoryPage = () => {
         </div>
       </section>
 
-      {/* 4-Step Craft Timeline */}
-      <section id="craft-timeline" className="process-grid">
-        <div>
+      {/* 4-Step Craft Vertical Timeline */}
+      <section id="craft-timeline" className="timeline-section-wrap">
+        <div className="timeline-header-center">
           <p className="section-label">Artisanal Craft</p>
           <h2 className="section-title">The 4-Step Harvest Ritual</h2>
-          
-          <div className="timeline">
-            <div className="timeline-step">
-              <div className="timeline-dot"></div>
-              <h3 style={{ fontSize: '1.3rem' }}>1. Pre-Dawn Hand Plucking</h3>
-              <p style={{ color: 'var(--color-text-muted)', marginTop: '4px' }}>
-                Plucking begins at 5:30 AM before sunrise opens the purple tepals. Plucking flowers in closed bloom locks volatile safranal essential oils inside the stigmas.
-              </p>
-            </div>
-
-            <div className="timeline-step">
-              <div className="timeline-dot"></div>
-              <h3 style={{ fontSize: '1.3rem' }}>2. Stigma Separation</h3>
-              <p style={{ color: 'var(--color-text-muted)', marginTop: '4px' }}>
-                Artisan women separate the three crimson stigmas by hand, trimming away the pale yellow style base to isolate Grade I Mongra.
-              </p>
-            </div>
-
-            <div className="timeline-step">
-              <div className="timeline-dot"></div>
-              <h3 style={{ fontSize: '1.3rem' }}>3. Slow Charcoal Ember Curing</h3>
-              <p style={{ color: 'var(--color-text-muted)', marginTop: '4px' }}>
-                Stigmas are spread on fine silk mesh frames suspended over birch charcoal embers, drying gently at 45°C–50°C to reduce moisture to a stable 8%–9%.
-              </p>
-            </div>
-
-            <div className="timeline-step">
-              <div className="timeline-dot"></div>
-              <h3 style={{ fontSize: '1.3rem' }}>4. Brass Tin Maturation</h3>
-              <p style={{ color: 'var(--color-text-muted)', marginTop: '4px' }}>
-                Dried Mongra threads rest in food-grade brass tins for 14 days in darkness. This maturation phase allows volatile aroma compounds to harmonize before sealing.
-              </p>
-            </div>
-          </div>
+          <p style={{ color: 'var(--color-text-muted)' }}>
+            Industrial mechanical drying strips saffron of its natural safranal essential oil. At Zaafraan Estate, every harvest follows traditional Kashmiri manual curing.
+          </p>
         </div>
 
-        <aside className="process-card">
-          <h3>ISO 3632-2 Spectrophotometry</h3>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', margin: 'var(--space-4) 0' }}>
-            <span className="meta-pill">GI Registration No. 635</span>
-            <span className="meta-pill">ISO 3632 Category I</span>
-            <span className="meta-pill">IIKSTC Dusoo Tested</span>
-          </div>
-
-          <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', lineHeight: '1.6' }}>
-            Every Zaafraan harvest batch is analyzed at the IIKSTC NABL laboratory in Dusoo, Pampore for three biochemical markers:
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-3)', marginTop: 'var(--space-4)', fontSize: '0.85rem' }}>
-            <div style={{ background: 'rgba(0,0,0,0.3)', padding: '0.75rem', borderRadius: 'var(--radius-md)' }}>
-              <strong style={{ color: 'var(--color-primary)' }}>Crocin (Coloring Strength A440nm):</strong><br />
-              Category I threshold &ge; 200 (Zaafraan tests 250 – 280+).
+        <div className="timeline-container">
+          {steps.map((step) => (
+            <div key={step.num} className="timeline-item">
+              <div className="timeline-node-icon">
+                {step.icon}
+              </div>
+              <div className="timeline-card-content">
+                <span className="timeline-step-tag">Step {step.num}</span>
+                <h3 className="timeline-card-title">{step.title}</h3>
+                <p className="timeline-card-text">{step.text}</p>
+              </div>
             </div>
-            <div style={{ background: 'rgba(0,0,0,0.3)', padding: '0.75rem', borderRadius: 'var(--radius-md)' }}>
-              <strong style={{ color: '#fff' }}>Safranal (Aroma A330nm):</strong><br />
-              Category I threshold 20–50 (Zaafraan tests 38 – 45).
-            </div>
-            <div style={{ background: 'rgba(0,0,0,0.3)', padding: '0.75rem', borderRadius: 'var(--radius-md)' }}>
-              <strong style={{ color: '#fff' }}>Picrocrocin (Flavor A257nm):</strong><br />
-              Category I threshold &ge; 70 (Zaafraan tests 88 – 96).
-            </div>
-          </div>
-
-          <div style={{ marginTop: 'var(--space-6)' }}>
-            <Link to="/quality" className="btn btn-outline btn-sm">
-              Lookup Batch Certificate &rarr;
-            </Link>
-          </div>
-        </aside>
+          ))}
+        </div>
       </section>
     </main>
   );

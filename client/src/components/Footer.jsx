@@ -28,10 +28,10 @@ export const Footer = () => {
               </div>
             </div>
             <p style={{ marginTop: 'var(--space-4)', color: 'var(--color-text-muted)', fontSize: 'var(--text-sm)', maxWidth: '30rem' }}>
-              A seasonal estate bringing authentic GI Tagged Kashmiri Mongra saffron directly from Pampore Karewas to your kitchen.
+              A seasonal estate bringing 100% pure Kashmiri Mongra saffron directly from Pampore Karewas to your kitchen.
             </p>
             <p className="footer-meta">
-              Registered in Srinagar · GI Tag Registration No. 635 · FSSAI Compliant · Contact: hello@zaafraanestate.com
+              Pampore, Kashmir · 100% Pure All-Red Mongra Saffron · Contact: haziqzargar41@gmail.com
             </p>
           </div>
 
@@ -65,7 +65,7 @@ export const Footer = () => {
 
         <div style={{ paddingTop: 'var(--space-6)', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--color-text-dim)' }}>
           <div>&copy; {new Date().getFullYear()} Zaafraan Estate. All rights reserved.</div>
-          <div>ISO 3632-1 Grade I Certified · Pampore Karewas</div>
+          <div>100% Pure Mongra Saffron · Pampore Karewas</div>
         </div>
       </div>
     </footer>

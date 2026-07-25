@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { X, Trash2, Tag, ShoppingBag, ArrowRight } from 'lucide-react';
 
@@ -51,9 +52,9 @@ export const CartDrawer = () => {
               <ShoppingBag size={32} />
             </div>
             <p>Your tray is currently empty.</p>
-            <button className="btn btn-outline btn-sm" onClick={closeDrawer}>
+            <Link to="/shop" className="btn btn-outline btn-sm" onClick={closeDrawer}>
               Explore Saffron Tins
-            </button>
+            </Link>
           </div>
         ) : (
           <>

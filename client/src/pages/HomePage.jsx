@@ -37,9 +37,9 @@ export const HomePage = () => {
           </p>
 
           <div className="hero-meta">
-            <div className="meta-pill">GI Tag Certified (2020)</div>
-            <div className="meta-pill">ISO 3632 Category I Mongra</div>
-            <div className="meta-pill">IIKSTC Dusoo Lab Tested</div>
+            <div className="meta-pill">100% Pure Mongra</div>
+            <div className="meta-pill">Category I Stigmas</div>
+            <div className="meta-pill">Pampore Karewa Soil</div>
           </div>
 
           <div className="hero-actions">
@@ -76,7 +76,7 @@ export const HomePage = () => {
                 <div>
                   <div style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--color-text-muted)' }}>Harvest Batch</div>
                   <strong style={{ color: '#fff' }}>ZE-2025-089</strong>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>NABL Certified</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>100% Pure Mongra</div>
                 </div>
               </div>
             </div>
@@ -87,7 +87,7 @@ export const HomePage = () => {
       {/* Terroir & Origin Section */}
       <section className="story-grid-layout">
         <div>
-          <p className="section-label">Geographical Indication & Terroir</p>
+          <p className="section-label">Origin & Terroir</p>
           <h2 className="section-title">Born in Pleistocene Karewa Clay</h2>
           <p style={{ color: 'var(--color-text-muted)' }}>
             At Zaafraan Estate in Pampore, saffron cultivation relies on ancient lacustrine <strong>Karewa soil deposits</strong>—rich in iron, clay, and essential organic minerals. Plucked before sunrise in late October, each <em>Crocus sativus</em> flower yields exactly three deep crimson stigmas.
@@ -98,16 +98,16 @@ export const HomePage = () => {
 
           <div className="story-cards-wrapper">
             <div className="story-card">
-              <span>GI Certified (2020)</span>
-              Protected geographical status guaranteeing 100% origin from Kashmir Valley.
+              <span>100% Kashmir Origin</span>
+              Pure autumn harvest directly from Pampore Karewa soils.
             </div>
             <div className="story-card">
               <span>Grade I Mongra</span>
               All-red stigma tips with zero yellow style fillers or artificial weighting.
             </div>
             <div className="story-card">
-              <span>IIKSTC Tested</span>
-              Spectrophotometer batch certified at Dusoo Pampore facility under ISO 3632-2.
+              <span>High Crocin Absorptivity</span>
+              Deep natural red pigment releasing rich golden yellow in warm infusions.
             </div>
             <div className="story-card">
               <span>Low Moisture (8-9%)</span>

@@ -68,7 +68,7 @@ export const ContactPage = () => {
                 className="contact-email-action-btn"
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <Mail size={20} color="var(--color-primary)" />
+                  <Mail size={20} />
                   <span style={{ fontWeight: 600 }}>Send Direct Email</span>
                 </div>
                 <ExternalLink size={16} style={{ opacity: 0.8 }} />

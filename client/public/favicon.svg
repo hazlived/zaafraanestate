@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <circle cx="32" cy="32" r="30" fill="#0b0f14" stroke="#f3c27a" stroke-width="2.5"/>
+  <circle cx="32" cy="32" r="26" fill="rgba(243, 194, 122, 0.08)" stroke="rgba(217, 56, 41, 0.3)" stroke-width="1"/>
+  <!-- Lucide Flower2 Saffron Petals & Leaves -->
+  <g fill="none" stroke="#f3c27a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M32 24a4 4 0 1 1 0-8 4 4 0 0 1 0 8z" />
+    <path d="M24 32a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" />
+    <path d="M40 32a4 4 0 1 1 8 0 4 4 0 0 1-8 0z" />
+    <path d="M32 40a4 4 0 1 1 0 8 4 4 0 0 1 0-8z" />
+    <circle cx="32" cy="32" r="3" fill="#f3c27a" />
+    <path d="M32 43v11" />
+    <path d="M25 49c3.5-1 7-4 7-6" />
+    <path d="M39 49c-3.5-1-7-4-7-6" />
+  </g>
+</svg>

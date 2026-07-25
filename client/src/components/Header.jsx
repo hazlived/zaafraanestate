@@ -14,7 +14,7 @@ export const Header = () => {
     { path: '/story', label: 'Heritage & Craft' },
     { path: '/shop', label: 'Harvest Shop' },
     { path: '/rituals', label: 'Infusion & Recipes' },
-    { path: '/quality', label: 'Authenticity & Lab' },
+    // { path: '/quality', label: 'Authenticity & Lab' },
     { path: '/contact', label: 'Contact' }
   ];
 
@@ -27,7 +27,7 @@ export const Header = () => {
           </div>
           <div className="brand-text">
             <span className="brand-name">Zaafraan Estate</span>
-            <span className="brand-tagline">GI Tagged Kashmiri Mongra · Pampore</span>
+            <span className="brand-tagline">100% Pure Kashmiri Mongra · Pampore</span>
           </div>
         </Link>
 
@@ -58,54 +58,48 @@ export const Header = () => {
             <Menu size={22} />
           </button>
         </div>
-      </div>
 
-      {/* Full-Screen Top Dropdown Mobile Menu mounted directly to document.body via Portal */}
-      {mobileNavOpen &&
-        ReactDOM.createPortal(
-          <div className="mobile-nav-full-overlay">
-            <div className="mobile-nav-top-bar">
-              <div className="brand-mark">
-                <div className="brand-logo" aria-hidden="true">
-                  <Flower2 size={24} />
+        {/* Full-Screen Top Dropdown Mobile Menu Portal */}
+        {mobileNavOpen &&
+          ReactDOM.createPortal(
+            <div className="mobile-nav-full-overlay" onClick={() => setMobileNavOpen(false)}>
+              <div className="mobile-nav-top-bar" onClick={(e) => e.stopPropagation()}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Flower2 size={28} color="var(--color-primary)" />
+                  <span className="brand-name" style={{ fontSize: '1.4rem' }}>Zaafraan Estate</span>
                 </div>
-                <div className="brand-text">
-                  <span className="brand-name">Zaafraan Estate</span>
-                  <span className="brand-tagline" style={{ display: 'block' }}>Pampore Karewas</span>
-                </div>
+                <button
+                  className="mobile-close-circle-btn"
+                  onClick={() => setMobileNavOpen(false)}
+                  aria-label="Close menu"
+                >
+                  <X size={26} />
+                </button>
               </div>
 
-              <button
-                className="mobile-close-circle-btn"
-                onClick={() => setMobileNavOpen(false)}
-                aria-label="Close navigation menu"
-              >
-                <X size={26} />
-              </button>
-            </div>
+              <div className="mobile-nav-links-wrap" onClick={(e) => e.stopPropagation()}>
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.path}
+                    to={link.path}
+                    className={`mobile-nav-link-item ${location.pathname === link.path ? 'active' : ''}`}
+                    onClick={() => setMobileNavOpen(false)}
+                  >
+                    <span>{link.label}</span>
+                    <ArrowRight size={22} className="mobile-link-arrow" />
+                  </Link>
+                ))}
+              </div>
 
-            <div className="mobile-nav-links-wrap">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`mobile-nav-link-item ${location.pathname === link.path ? 'active' : ''}`}
-                  onClick={() => setMobileNavOpen(false)}
-                >
-                  <span>{link.label}</span>
-                  <ArrowRight size={22} className="mobile-link-arrow" />
-                </Link>
-              ))}
-            </div>
-
-            <div className="mobile-nav-footer">
-              <p style={{ fontSize: '0.8rem', color: 'var(--color-primary)', letterSpacing: '0.14em', textTransform: 'uppercase', fontWeight: 600 }}>
-                Kashmiri Mongra Saffron · Pampore Estate
-              </p>
-            </div>
-          </div>,
-          document.body
-        )}
+              <div className="mobile-nav-footer" onClick={(e) => e.stopPropagation()}>
+                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', margin: 0 }}>
+                  Harvested in Pampore, Kashmir · 100% Pure Saffron
+                </p>
+              </div>
+            </div>,
+            document.body
+          )}
+      </div>
     </header>
   );
 };

@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { Flame, Droplets, Clock, Sparkles, Play, Pause, RotateCcw, CheckCircle2 } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Flame, Droplets, Clock, Sparkles, Play, Pause, RotateCcw, CheckCircle2, ChevronDown, ChevronUp, Check } from 'lucide-react';
 
 export const BloomingCalculator = () => {
   const [servings, setServings] = useState(4);
-  const [beverageType, setBeverageType] = useState('kahwa'); // 'kahwa' | 'milk' | 'biryani' | 'skin'
+  const [beverageType, setBeverageType] = useState('kahwa');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const calcMap = {
     kahwa: {
       title: 'Kashmiri Kahwa Tea',
+      subText: '10 mins · 1.25 threads/cup',
       threadsPerCup: 1.25,
       temp: '80°C–85°C',
       timeStr: '10 mins',
@@ -16,7 +19,8 @@ export const BloomingCalculator = () => {
       liquidColor: 'rgba(217, 130, 43, 0.75)'
     },
     milk: {
-      title: 'Warm Saffron Milk',
+      title: 'Warm Saffron Almond Milk',
+      subText: '15 mins · 2.5 threads/cup',
       threadsPerCup: 2.5,
       temp: '70°C–75°C',
       timeStr: '15 mins',
@@ -26,6 +30,7 @@ export const BloomingCalculator = () => {
     },
     biryani: {
       title: 'Royal Biryani Dum Bloom',
+      subText: '18 mins · 2 threads/portion',
       threadsPerCup: 2.0,
       temp: '75°C',
       timeStr: '18 mins',
@@ -33,8 +38,39 @@ export const BloomingCalculator = () => {
       base: 'Warm Water + Desi Ghee / Rose Water',
       liquidColor: 'rgba(217, 56, 41, 0.85)'
     },
+    phirni: {
+      title: 'Kashmiri Saffron Phirni',
+      subText: '15 mins · 2.5 threads/portion',
+      threadsPerCup: 2.5,
+      temp: '80°C',
+      timeStr: '15 mins',
+      totalSeconds: 900,
+      base: 'Whole Milk + Ground Rice & Sugar',
+      liquidColor: 'rgba(243, 194, 122, 0.9)'
+    },
+    shahi: {
+      title: 'Zaafraan Shahi Tukda',
+      subText: '15 mins · 3 threads/portion',
+      threadsPerCup: 3.0,
+      temp: '75°C',
+      timeStr: '15 mins',
+      totalSeconds: 900,
+      base: 'Sugar Syrup & Condensed Rabri',
+      liquidColor: 'rgba(217, 130, 43, 0.85)'
+    },
+    elixir: {
+      title: 'Morning Saffron & Honey Elixir',
+      subText: '5 mins · 4 threads/cup',
+      threadsPerCup: 4.0,
+      temp: '70°C',
+      timeStr: '5 mins',
+      totalSeconds: 300,
+      base: 'Warm Water + Wildflower Honey & Lemon',
+      liquidColor: 'rgba(243, 194, 122, 0.8)'
+    },
     skin: {
-      title: 'Radiance Face Mask',
+      title: 'Radiance Face & Honey Mask',
+      subText: '20 mins · 1.5 threads/application',
       threadsPerCup: 1.5,
       temp: 'Room Temp',
       timeStr: '20 mins',
@@ -54,6 +90,17 @@ export const BloomingCalculator = () => {
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerFinished, setTimerFinished] = useState(false);
 
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
+
   // Update timer target whenever beverageType changes
   useEffect(() => {
     setTimerRunning(false);
@@ -61,31 +108,32 @@ export const BloomingCalculator = () => {
     setTimeLeft(currentConfig.totalSeconds);
   }, [beverageType]);
 
-  // Countdown Ticker Effect
+  // Countdown Interval Effect
   useEffect(() => {
-    let interval = null;
+    let timer = null;
     if (timerRunning && timeLeft > 0) {
-      interval = setInterval(() => {
+      timer = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
       }, 1000);
-    } else if (timeLeft === 0 && timerRunning) {
+    } else if (timerRunning && timeLeft === 0) {
       setTimerRunning(false);
       setTimerFinished(true);
     }
-    return () => clearInterval(interval);
+    return () => {
+      if (timer) clearInterval(timer);
+    };
   }, [timerRunning, timeLeft]);
 
-  const handleStart = () => {
-    if (timeLeft === 0) setTimeLeft(currentConfig.totalSeconds);
-    setTimerFinished(false);
-    setTimerRunning(true);
+  const toggleTimer = () => {
+    if (timerFinished) {
+      resetTimer();
+      setTimerRunning(true);
+    } else {
+      setTimerRunning(!timerRunning);
+    }
   };
 
-  const handlePause = () => {
-    setTimerRunning(false);
-  };
-
-  const handleReset = () => {
+  const resetTimer = () => {
     setTimerRunning(false);
     setTimerFinished(false);
     setTimeLeft(currentConfig.totalSeconds);
@@ -116,15 +164,50 @@ export const BloomingCalculator = () => {
         <div>
           <div className="form-group">
             <label>Select Recipe / Beverage Type</label>
-            <select value={beverageType} onChange={(e) => setBeverageType(e.target.value)}>
-              <option value="kahwa">Kashmiri Kahwa Tea (10 mins · 1.25 threads/cup)</option>
-              <option value="milk">Warm Saffron Almond Milk (15 mins · 2.5 threads/cup)</option>
-              <option value="biryani">Royal Biryani Dum Bloom (18 mins · 2 threads/portion)</option>
-              <option value="skin">Radiance Face & Honey Mask (20 mins · 1.5 threads/application)</option>
-            </select>
+
+            {/* Custom Theme-Matched Dropdown */}
+            <div className={`custom-dropdown-wrap ${dropdownOpen ? 'is-open' : ''}`} ref={dropdownRef}>
+              <button
+                type="button"
+                className="custom-dropdown-trigger"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                aria-expanded={dropdownOpen}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                  <span style={{ fontWeight: 600, color: 'var(--color-primary)' }}>{currentConfig.title}</span>
+                  <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{currentConfig.subText}</span>
+                </div>
+                {dropdownOpen ? <ChevronUp size={20} color="var(--color-primary)" /> : <ChevronDown size={20} color="var(--color-primary)" />}
+              </button>
+
+              {dropdownOpen && (
+                <div className="custom-dropdown-menu">
+                  {Object.keys(calcMap).map((key) => {
+                    const item = calcMap[key];
+                    const isSelected = beverageType === key;
+                    return (
+                      <div
+                        key={key}
+                        className={`custom-dropdown-item ${isSelected ? 'is-selected' : ''}`}
+                        onClick={() => {
+                          setBeverageType(key);
+                          setDropdownOpen(false);
+                        }}
+                      >
+                        <div style={{ display: 'flex', flexDirection: 'column' }}>
+                          <span style={{ fontWeight: isSelected ? '700' : '500' }}>{item.title}</span>
+                          <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>{item.subText}</span>
+                        </div>
+                        {isSelected && <Check size={16} color="var(--color-primary)" />}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
 
-          <div className="form-group">
+          <div className="form-group" style={{ marginTop: 'var(--space-6)' }}>
             <label>Number of Servings / Cups ({servings})</label>
             <input
               type="range"
@@ -150,10 +233,11 @@ export const BloomingCalculator = () => {
                 {Array.from({ length: Math.min(8, Math.ceil(rawThreads)) }).map((_, idx) => (
                   <div
                     key={idx}
-                    className={`blooming-thread-item ${timerRunning ? 'thread-active-simmer' : ''}`}
+                    className="visual-saffron-thread"
                     style={{
-                      left: `${15 + idx * 10}%`,
-                      animationDelay: `${idx * 0.3}s`
+                      left: `${15 + (idx * 11) % 70}%`,
+                      top: `${20 + (idx * 17) % 55}%`,
+                      animationDelay: `${idx * 0.4}s`
                     }}
                   />
                 ))}
@@ -212,35 +296,56 @@ export const BloomingCalculator = () => {
               </span>
             </div>
 
-            <div className="simmer-clock-display">
-              <div className="simmer-digits">{formatTime(timeLeft)}</div>
+            <div className="simmer-timer-display">
+              <span className="timer-clock-digits">{formatTime(timeLeft)}</span>
 
-              <div className="simmer-controls">
-                {!timerRunning ? (
-                  <button className="btn btn-primary btn-sm" onClick={handleStart}>
-                    <Play size={14} /> Start Simmering
-                  </button>
-                ) : (
-                  <button className="btn btn-outline btn-sm" onClick={handlePause}>
-                    <Pause size={14} /> Pause
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  className={`btn-timer-action ${timerRunning ? 'is-active' : ''}`}
+                  onClick={toggleTimer}
+                >
+                  {timerRunning ? (
+                    <>
+                      <Pause size={14} /> Pause
+                    </>
+                  ) : timerFinished ? (
+                    <>
+                      <RotateCcw size={14} /> Restart
+                    </>
+                  ) : (
+                    <>
+                      <Play size={14} /> Start Simmer
+                    </>
+                  )}
+                </button>
+
+                {(timerRunning || timeLeft !== currentConfig.totalSeconds) && (
+                  <button className="btn-timer-reset" onClick={resetTimer} title="Reset Timer">
+                    <RotateCcw size={14} />
                   </button>
                 )}
-                <button className="btn btn-outline btn-sm" onClick={handleReset} title="Reset timer">
-                  <RotateCcw size={14} />
-                </button>
               </div>
             </div>
 
-            {/* Simmer Progress Bar */}
+            {/* Simmer Progress Track */}
             <div className="simmer-progress-track">
-              <div className="simmer-progress-fill" style={{ width: `${progressPercent}%` }}></div>
+              <div
+                className="simmer-progress-fill"
+                style={{ width: `${progressPercent}%` }}
+              />
             </div>
 
             {timerFinished && (
-              <div className="simmer-complete-badge">
-                <CheckCircle2 size={16} /> Bloom Complete! Peak Crocin Extracted.
+              <div className="timer-completed-toast">
+                <CheckCircle2 size={16} color="#10b981" />
+                <span>Infusion Complete! Maximum Crocin A440nm Extracted.</span>
               </div>
             )}
+          </div>
+
+          <div className="calc-guarantee-note">
+            <Droplets size={16} color="var(--color-primary)" />
+            <span>Grade I Mongra all-red threads release rich golden crocin pigment within 10–15 minutes.</span>
           </div>
         </div>
       </div>
