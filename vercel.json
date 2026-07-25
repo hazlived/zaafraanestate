@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://zaafraan-backend.onrender.com/api/:path*"
+      "destination": "https://zaafraanestate.onrender.com/api/:path*"
     },
     {
       "source": "/(.*)",
