@@ -1,0 +1,72 @@
+const productsData = [
+  {
+    id: 'single-thread',
+    title: 'Dawn Ritual Tin · 1g',
+    subtitle: 'GI Tagged Category I Mongra Stigmas',
+    price: 599,
+    gram: '1 Gram (Approx 450 Mongra threads)',
+    gramsCount: 1,
+    category: 'Single Stigmas',
+    crocinScore: '268.4 Absorptivity',
+    badge: 'In Stock · 2025 Harvest',
+    image: '/images/tin_package.png',
+    description: 'Pure Mongra stigmas harvested before dawn from Pampore Karewas. Ideal for personal morning kahwa cups, golden almond milk infusions, or elevated culinary recipes.',
+    inStock: true,
+    threadsCount: 450,
+    rating: 4.9,
+    reviewsCount: 128
+  },
+  {
+    id: 'family',
+    title: 'Family Feast Tin · 3g',
+    subtitle: 'Grade I Mongra · Charcoal Cured',
+    price: 1797,
+    gram: '3 Grams (Approx 1,350 threads)',
+    gramsCount: 3,
+    category: 'Family Tins',
+    crocinScore: '272.1 Absorptivity',
+    badge: 'Out of Stock',
+    image: '/images/hero_saffron.png',
+    description: 'Hand-picked all-red stigma tips slowly charcoal dried over birch embers. Currently sold out for this harvest cycle.',
+    inStock: false,
+    threadsCount: 1350,
+    rating: 5.0,
+    reviewsCount: 215
+  },
+  {
+    id: 'reserve',
+    title: 'Estate Reserve Tin · 5g',
+    subtitle: 'First Dawn Harvest · High Safranal',
+    price: 2995,
+    gram: '5 Grams (Chef & Connoisseur Reserve)',
+    gramsCount: 5,
+    category: 'Bulk Reserve',
+    crocinScore: '279.8 Absorptivity',
+    badge: 'Out of Stock',
+    image: '/images/tin_package.png',
+    description: 'Limited edition reserve harvested strictly during the first 3 days of late October autumn bloom. Reserved out for current season.',
+    inStock: false,
+    threadsCount: 2250,
+    rating: 5.0,
+    reviewsCount: 84
+  },
+  {
+    id: 'gift-set',
+    title: 'Royal Brass Gift Box Set · 6g',
+    subtitle: '2x 3g Tins with Handcrafted Brass Mortar & Pestle',
+    price: 3594,
+    gram: '6 Grams Total + Carved Mortar',
+    gramsCount: 6,
+    category: 'Gift Sets',
+    crocinScore: '275.0 Absorptivity',
+    badge: 'Out of Stock',
+    image: '/images/tin_package.png',
+    description: 'The ultimate Kashmiri saffron gift presentation. Sold out for the 2025 autumn bloom cycle.',
+    inStock: false,
+    threadsCount: 2700,
+    rating: 4.95,
+    reviewsCount: 62
+  }
+];
+
+module.exports = productsData;
