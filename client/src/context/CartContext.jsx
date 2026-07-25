@@ -84,7 +84,7 @@ export const CartProvider = ({ children }) => {
     const clean = code.trim().toUpperCase();
     if (clean === 'PURESAFFRON') {
       setPromoCode('PURESAFFRON');
-      setPromoMessage('Promo PURESAFFRON applied! Price reduced to ₹549 / gram.');
+      setPromoMessage('Promo PURESAFFRON applied! Shipping reduced to ₹21.');
       return true;
     } else {
       setPromoMessage('Invalid promo code. Use "PURESAFFRON"');
@@ -95,17 +95,13 @@ export const CartProvider = ({ children }) => {
   const totalItemsCount = Object.values(items).reduce((acc, item) => acc + item.qty, 0);
   const subtotal = Object.values(items).reduce((acc, item) => acc + item.price * item.qty, 0);
 
-  // PURESAFFRON promo code: Reduces price of 1 gram to ₹549 (₹50 discount per gram)
-  let discountAmount = 0;
-  if (promoCode === 'PURESAFFRON') {
-    const totalGrams = Object.values(items).reduce((acc, item) => {
-      const gCount = item.gramsCount || (item.id === 'single-thread' ? 1 : item.id === 'family' ? 3 : item.id === 'reserve' ? 5 : 6);
-      return acc + gCount * item.qty;
-    }, 0);
-    discountAmount = totalGrams * 50;
+  // Standard shipping fee = ₹99. With PURESAFFRON promo code = ₹21.
+  const discountAmount = 0;
+  let shippingFee = 0;
+  if (subtotal > 0) {
+    shippingFee = promoCode === 'PURESAFFRON' ? 21 : 99;
   }
 
-  const shippingFee = subtotal >= 5000 || subtotal === 0 ? 0 : 150;
   const grandTotal = Math.max(0, subtotal - discountAmount + shippingFee);
 
   return (
