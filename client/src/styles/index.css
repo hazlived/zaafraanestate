@@ -1741,6 +1741,14 @@ h3 {
   to { transform: scale(1); opacity: 1; }
 }
 
+/* Contact Page Layout Grid */
+.contact-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--space-10);
+  align-items: start;
+}
+
 /* Footer */
 footer {
   margin-top: auto;
@@ -1971,6 +1979,12 @@ html, body, #root, main, section, header, footer {
   .modal-grid-2col {
     grid-template-columns: 1fr !important;
     gap: var(--space-3);
+  }
+
+  /* Contact Page Grid Mobile Stacking */
+  .contact-layout-grid {
+    grid-template-columns: 1fr !important;
+    gap: var(--space-6) !important;
   }
 
   .upi-vpa-box {

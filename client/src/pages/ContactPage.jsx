@@ -47,7 +47,7 @@ export const ContactPage = () => {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.3fr', gap: 'var(--space-10)', alignItems: 'start' }}>
+        <div className="contact-layout-grid">
           {/* Contact Details */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-6)' }}>
             <div className="story-card">
