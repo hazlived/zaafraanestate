@@ -86,20 +86,39 @@ export const CartProvider = ({ children }) => {
       setPromoCode('PURESAFFRON');
       setPromoMessage('Promo PURESAFFRON applied! Shipping reduced to ₹21.');
       return true;
+    } else if (clean === 'FRIENDS12') {
+      setPromoCode('FRIENDS12');
+      setPromoMessage('Special Friends & Family code FRIENDS12 applied! 12% discount & ₹10 shipping applied.');
+      return true;
     } else {
-      setPromoMessage('Invalid promo code. Use "PURESAFFRON"');
+      setPromoMessage('Invalid promo code.');
       return false;
     }
+  };
+
+  const removePromo = () => {
+    setPromoCode('');
+    setPromoMessage('');
   };
 
   const totalItemsCount = Object.values(items).reduce((acc, item) => acc + item.qty, 0);
   const subtotal = Object.values(items).reduce((acc, item) => acc + item.price * item.qty, 0);
 
-  // Standard shipping fee = ₹99. With PURESAFFRON promo code = ₹21.
-  const discountAmount = 0;
+  // Discount & Shipping Fee Calculation
+  let discountAmount = 0;
+  if (promoCode === 'FRIENDS12' && subtotal > 0) {
+    discountAmount = Math.round(subtotal * 0.12);
+  }
+
   let shippingFee = 0;
   if (subtotal > 0) {
-    shippingFee = promoCode === 'PURESAFFRON' ? 21 : 99;
+    if (promoCode === 'PURESAFFRON') {
+      shippingFee = 21;
+    } else if (promoCode === 'FRIENDS12') {
+      shippingFee = 10;
+    } else {
+      shippingFee = 99;
+    }
   }
 
   const grandTotal = Math.max(0, subtotal - discountAmount + shippingFee);
@@ -112,6 +131,10 @@ export const CartProvider = ({ children }) => {
         updateQuantity,
         removeItem,
         clearCart,
+        promoCode,
+        promoMessage,
+        applyPromo,
+        removePromo,
         totalItemsCount,
         subtotal,
         discountAmount,
@@ -126,9 +149,6 @@ export const CartProvider = ({ children }) => {
           setIsCheckoutOpen(true);
         },
         closeCheckout: () => setIsCheckoutOpen(false),
-        applyPromo,
-        promoCode,
-        promoMessage,
         toastMessage,
         showToast
       }}

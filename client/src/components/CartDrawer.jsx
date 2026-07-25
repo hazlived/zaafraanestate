@@ -16,7 +16,9 @@ export const CartDrawer = () => {
     shippingFee,
     grandTotal,
     openCheckout,
+    promoCode,
     applyPromo,
+    removePromo,
     promoMessage
   } = useCart();
 
@@ -31,6 +33,11 @@ export const CartDrawer = () => {
     if (inputCode) {
       applyPromo(inputCode);
     }
+  };
+
+  const handleRemovePromo = () => {
+    removePromo();
+    setInputCode('');
   };
 
   return ReactDOM.createPortal(
@@ -84,18 +91,35 @@ export const CartDrawer = () => {
             </div>
 
             <div className="cart-footer">
-              <form onSubmit={handleApplyPromo} style={{ display: 'flex', gap: 'var(--space-2)' }}>
-                <div style={{ position: 'relative', flex: 1 }}>
-                  <input
-                    type="text"
-                    placeholder="Promo Code (e.g. PURESAFFRON)"
-                    value={inputCode}
-                    onChange={(e) => setInputCode(e.target.value)}
-                    style={{ width: '100%', background: 'var(--color-bg)', border: '1px solid var(--color-border)', color: '#fff', padding: '0.5rem 0.8rem', borderRadius: 'var(--radius-md)', fontSize: '0.85rem' }}
-                  />
+              {promoCode ? (
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(243, 194, 122, 0.1)', border: '1px solid var(--color-primary)', padding: '0.5rem 0.85rem', borderRadius: 'var(--radius-md)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.85rem', color: 'var(--color-primary)', fontWeight: 600 }}>
+                    <Tag size={15} />
+                    <span>Applied: {promoCode}</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleRemovePromo}
+                    style={{ background: 'none', border: 'none', color: 'var(--color-saffron-red)', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '4px' }}
+                  >
+                    <X size={14} /> Remove Code
+                  </button>
                 </div>
-                <button className="btn btn-outline btn-sm" type="submit">Apply</button>
-              </form>
+              ) : (
+                <form onSubmit={handleApplyPromo} style={{ display: 'flex', gap: 'var(--space-2)' }}>
+                  <div style={{ position: 'relative', flex: 1 }}>
+                    <input
+                      type="text"
+                      placeholder="Promo Code (e.g. PURESAFFRON)"
+                      value={inputCode}
+                      onChange={(e) => setInputCode(e.target.value)}
+                      style={{ width: '100%', background: 'var(--color-bg)', border: '1px solid var(--color-border)', color: '#fff', padding: '0.5rem 0.8rem', borderRadius: 'var(--radius-md)', fontSize: '0.85rem' }}
+                    />
+                  </div>
+                  <button className="btn btn-outline btn-sm" type="submit">Apply</button>
+                </form>
+              )}
+
               {promoMessage && (
                 <div style={{ fontSize: '0.78rem', color: promoMessage.includes('applied') ? 'var(--color-primary)' : 'var(--color-saffron-red)' }}>
                   {promoMessage}
