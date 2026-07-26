@@ -1515,6 +1515,166 @@ h3 {
   padding-left: var(--space-4);
 }
 
+/* Purity & Storage Guides */
+.purity-guide-wrap,
+.storage-guide-wrap {
+  padding: var(--space-12) 0;
+  border-top: var(--glass-border);
+}
+
+.purity-tabs-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-8);
+  flex-wrap: wrap;
+}
+
+.purity-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.purity-tab-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  background: rgba(243, 194, 122, 0.06);
+}
+
+.purity-tab-btn.is-active {
+  background: var(--color-gold-gradient);
+  color: #0b0f14 !important;
+  border-color: transparent;
+  box-shadow: var(--shadow-glow);
+}
+
+.purity-tab-btn.is-active svg {
+  color: #0b0f14 !important;
+}
+
+.purity-comparison-box {
+  background: var(--color-surface);
+  border: var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8);
+  box-shadow: var(--shadow-lg);
+}
+
+.purity-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+}
+
+.purity-result-card {
+  background: rgba(11, 15, 20, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  transition: all var(--transition-bounce);
+}
+
+.purity-result-card.is-pure {
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.purity-result-card.is-fake {
+  border-color: rgba(217, 56, 41, 0.3);
+}
+
+.purity-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.purity-status-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+}
+
+.purity-card-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* Storage Guide Cards */
+.storage-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-6);
+}
+
+.storage-card {
+  background: var(--color-surface);
+  border: var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  transition: all var(--transition-bounce);
+}
+
+.storage-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-glow);
+}
+
+.storage-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(243, 194, 122, 0.12);
+  border: 1px solid rgba(243, 194, 122, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.storage-rule-num {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-primary);
+  background: rgba(243, 194, 122, 0.08);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.storage-card-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: #ffffff;
+  margin-bottom: var(--space-2);
+}
+
+.storage-card-text {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .purity-cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 1024px) {
   .rituals-sticky-layout {
     grid-template-columns: 1fr !important;
@@ -2355,6 +2515,53 @@ html, body, #root, main, section, header, footer {
     padding: var(--space-3) var(--space-4);
   }
 
+  /* Custom UPI File Dropzone Styling */
+  .upi-file-dropzone {
+    position: relative;
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: var(--color-bg);
+    border: 1.5px dashed var(--color-primary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+
+  .upi-file-dropzone:hover {
+    background: rgba(243, 194, 122, 0.1);
+    border-color: #ffffff;
+    box-shadow: 0 0 15px rgba(243, 194, 122, 0.2);
+  }
+
+  .upi-file-dropzone input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 5;
+  }
+
+  .dropzone-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    pointer-events: none;
+    z-index: 1;
+  }
+
   /* Timer Component Mobile Optimization */
   .harvest-timer-box {
     padding: var(--space-4);
@@ -2508,5 +2715,52 @@ html, body, #root, main, section, header, footer {
     max-height: 90vh;
     overflow-y: auto;
   }
+}
+
+/* Custom UPI File Dropzone Styling */
+.upi-file-dropzone {
+  position: relative;
+  width: 100%;
+  padding: 0.9rem 1rem;
+  background: var(--color-bg);
+  border: 1.5px dashed var(--color-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.upi-file-dropzone:hover {
+  background: rgba(243, 194, 122, 0.1);
+  border-color: #ffffff;
+  box-shadow: 0 0 15px rgba(243, 194, 122, 0.2);
+}
+
+.upi-file-dropzone input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.dropzone-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 1;
 }
 

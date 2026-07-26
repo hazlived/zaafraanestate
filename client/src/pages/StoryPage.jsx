@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Sun, Sparkles, Flame, PackageCheck, ShieldCheck, MapPin } from 'lucide-react';
+import { SaffronPurityGuide } from '../components/SaffronPurityGuide';
+import { SaffronStorageGuide } from '../components/SaffronStorageGuide';
 
 export const StoryPage = () => {
   const steps = [
@@ -105,6 +107,12 @@ export const StoryPage = () => {
           ))}
         </div>
       </section>
+
+      {/* Interactive Fake vs Pure Spotter Guide */}
+      <SaffronPurityGuide />
+
+      {/* Storage & Care Guide */}
+      <SaffronStorageGuide />
     </main>
   );
 };

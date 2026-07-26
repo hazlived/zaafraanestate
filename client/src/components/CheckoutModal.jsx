@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { useCart } from '../context/CartContext';
 import { submitOrder } from '../services/api';
-import { X, CheckCircle2, ShieldCheck, QrCode, Upload, Copy, Check, AlertCircle, Send, Truck } from 'lucide-react';
+import { X, CheckCircle2, ShieldCheck, QrCode, Upload, Copy, Check, AlertCircle, Send, Truck, ChevronDown, ChevronUp } from 'lucide-react';
 
 export const CheckoutModal = () => {
   const { isCheckoutOpen, closeCheckout, items, subtotal, discountAmount, shippingFee, grandTotal, clearCart } = useCart();
@@ -11,6 +11,8 @@ export const CheckoutModal = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
   const [copiedUpi, setCopiedUpi] = useState(false);
+  const [paymentDropdownOpen, setPaymentDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -24,6 +26,28 @@ export const CheckoutModal = () => {
     upiScreenshotName: '',
     upiScreenshotDataUrl: ''
   });
+
+  const paymentOptions = {
+    upi: {
+      title: 'UPI Payment (GPay / PhonePe / Paytm)',
+      subText: 'Instant Verification via QR Code / VPA ID'
+    },
+    cod: {
+      title: 'Cash On Delivery (COD)',
+      subText: 'Pay upon delivery'
+    }
+  };
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setPaymentDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
 
   if (!isCheckoutOpen) return null;
 
@@ -79,7 +103,7 @@ export const CheckoutModal = () => {
   };
 
   const copyUpiId = () => {
-    navigator.clipboard.writeText('zaafraanestate@upi');
+    navigator.clipboard.writeText('haziqzargar42-1@okhdfcbank');
     setCopiedUpi(true);
     setTimeout(() => setCopiedUpi(false), 2000);
   };
@@ -88,32 +112,22 @@ export const CheckoutModal = () => {
     e.preventDefault();
     setErrorMessage(null);
 
-    if (formData.paymentMethod === 'upi' && !formData.upiTxnId) {
-      setErrorMessage('Please enter your UPI Transaction ID / UTR number.');
-      return;
+    if (formData.paymentMethod === 'upi') {
+      if (!formData.upiTxnId.trim()) {
+        setErrorMessage('Please enter your 12-digit UPI Transaction / UTR ID.');
+        return;
+      }
+      if (!formData.upiScreenshotDataUrl) {
+        setErrorMessage('Please attach your payment receipt screenshot to complete the order.');
+        return;
+      }
     }
 
     setLoading(true);
 
-    const itemList = Object.values(items).map((item) => ({
-      id: item.id,
-      title: item.title,
-      qty: item.qty,
-      price: item.price,
-      gram: item.gram
-    }));
-
     const payload = {
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      address: formData.address,
-      city: formData.city,
-      pincode: formData.pincode,
-      paymentMethod: formData.paymentMethod,
-      upiTxnId: formData.upiTxnId,
-      upiScreenshotDataUrl: formData.upiScreenshotDataUrl,
-      items: itemList,
+      ...formData,
+      items: Object.values(items),
       subtotal,
       discountAmount,
       shippingFee,
@@ -131,6 +145,8 @@ export const CheckoutModal = () => {
       setErrorMessage(res ? res.message : 'Order transmission failed. Please try again.');
     }
   };
+
+  const currentPayment = paymentOptions[formData.paymentMethod] || paymentOptions.upi;
 
   return ReactDOM.createPortal(
     <div className="modal-overlay" onClick={closeCheckout}>
@@ -160,23 +176,17 @@ export const CheckoutModal = () => {
               <div className="modal-grid-2col">
                 <div className="form-group">
                   <label>Full Name *</label>
-                  <input type="text" name="name" required placeholder="Ahmad Shah" value={formData.name} onChange={handleChange} />
+                  <input type="text" name="name" required placeholder="Ahmad Zargar" value={formData.name} onChange={handleChange} />
                 </div>
                 <div className="form-group">
-                  <label>Email Address *</label>
-                  <input type="email" name="email" required placeholder="ahmad@example.com" value={formData.email} onChange={handleChange} />
+                  <label>Phone Number (WhatsApp) *</label>
+                  <input type="tel" name="phone" required placeholder="+91 98765 43210" value={formData.phone} onChange={handleChange} />
                 </div>
               </div>
 
-              <div className="modal-grid-2col">
-                <div className="form-group">
-                  <label>Phone Number *</label>
-                  <input type="tel" name="phone" required placeholder="+91 98765 43210" value={formData.phone} onChange={handleChange} />
-                </div>
-                <div className="form-group">
-                  <label>Pincode *</label>
-                  <input type="text" name="pincode" required placeholder="190001" value={formData.pincode} onChange={handleChange} />
-                </div>
+              <div className="form-group">
+                <label>Email Address (For Order Receipts) *</label>
+                <input type="email" name="email" required placeholder="you@example.com" value={formData.email} onChange={handleChange} />
               </div>
 
               <div className="form-group">
@@ -184,13 +194,59 @@ export const CheckoutModal = () => {
                 <textarea name="address" rows={2} required placeholder="House No, Street, Landmark..." value={formData.address} onChange={handleChange} />
               </div>
 
-              {/* Payment Method Selection */}
+              <div className="modal-grid-2col">
+                <div className="form-group">
+                  <label>City / Town *</label>
+                  <input type="text" name="city" required placeholder="Srinagar / New Delhi" value={formData.city} onChange={handleChange} />
+                </div>
+                <div className="form-group">
+                  <label>PIN Code *</label>
+                  <input type="text" name="pincode" required placeholder="190001" value={formData.pincode} onChange={handleChange} />
+                </div>
+              </div>
+
+              {/* Payment Method Selection (Custom Luxury Theme Dropdown) */}
               <div className="form-group">
                 <label>Payment Method *</label>
-                <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
-                  <option value="upi">UPI Payment (GPay / PhonePe / Paytm)</option>
-                  <option value="cod">Cash on Delivery (COD · Pampore Verification)</option>
-                </select>
+                <div className={`custom-dropdown-wrap ${paymentDropdownOpen ? 'is-open' : ''}`} ref={dropdownRef}>
+                  <button
+                    type="button"
+                    className="custom-dropdown-trigger"
+                    onClick={() => setPaymentDropdownOpen(!paymentDropdownOpen)}
+                    aria-expanded={paymentDropdownOpen}
+                  >
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                      <span style={{ fontWeight: 600, color: 'var(--color-primary)' }}>{currentPayment.title}</span>
+                      <span style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>{currentPayment.subText}</span>
+                    </div>
+                    {paymentDropdownOpen ? <ChevronUp size={20} color="var(--color-primary)" /> : <ChevronDown size={20} color="var(--color-primary)" />}
+                  </button>
+
+                  {paymentDropdownOpen && (
+                    <div className="custom-dropdown-menu">
+                      {Object.keys(paymentOptions).map((key) => {
+                        const opt = paymentOptions[key];
+                        const isSelected = formData.paymentMethod === key;
+                        return (
+                          <div
+                            key={key}
+                            className={`custom-dropdown-item ${isSelected ? 'is-selected' : ''}`}
+                            onClick={() => {
+                              setFormData((prev) => ({ ...prev, paymentMethod: key }));
+                              setPaymentDropdownOpen(false);
+                            }}
+                          >
+                            <div style={{ display: 'flex', flexDirection: 'column' }}>
+                              <span style={{ fontWeight: isSelected ? '700' : '500' }}>{opt.title}</span>
+                              <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>{opt.subText}</span>
+                            </div>
+                            {isSelected && <Check size={16} color="var(--color-primary)" />}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* UPI Payment Gateway Module */}
@@ -209,7 +265,7 @@ export const CheckoutModal = () => {
                   <div className="upi-vpa-box">
                     <div>
                       <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)' }}>UPI VPA ID</div>
-                      <div className="upi-vpa-text">zaafraanestate@upi</div>
+                      <div className="upi-vpa-text">haziqzargar42-1@okhdfcbank</div>
                     </div>
                     <button
                       type="button"
@@ -219,6 +275,18 @@ export const CheckoutModal = () => {
                     >
                       {copiedUpi ? <><Check size={14} color="#10b981" /> Copied!</> : <><Copy size={14} /> Copy ID</>}
                     </button>
+                  </div>
+
+                  {/* UPI QR Code Container */}
+                  <div style={{ textAlign: 'center', margin: 'var(--space-3) 0', padding: '12px', background: '#ffffff', borderRadius: 'var(--radius-md)', border: '2px solid var(--color-primary)', boxShadow: '0 0 20px rgba(243, 194, 122, 0.25)' }}>
+                    <img
+                      src="/images/upi-qr.png"
+                      alt="Scan to Pay via GPay / PhonePe / Paytm"
+                      style={{ width: '190px', height: '190px', objectFit: 'contain', display: 'block', margin: '0 auto', borderRadius: '4px' }}
+                    />
+                    <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#0b0f14', marginTop: '8px' }}>
+                      Scan QR Code to Pay ₹{grandTotal.toLocaleString()}
+                    </div>
                   </div>
 
                   <p className="upi-instruction-text">
@@ -238,88 +306,80 @@ export const CheckoutModal = () => {
                   </div>
 
                   <div className="form-group" style={{ marginBottom: 0 }}>
-                    <label>Upload Payment Screenshot</label>
+                    <label>Upload Payment Screenshot *</label>
                     <div className="upi-file-dropzone">
                       <input
                         type="file"
                         accept="image/*"
+                        required
                         onChange={handleFileChange}
-                        style={{
-                          position: 'absolute',
-                          inset: 0,
-                          width: '100%',
-                          height: '100%',
-                          opacity: 0,
-                          cursor: 'pointer'
-                        }}
                       />
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', color: 'var(--color-primary)' }}>
-                        <Upload size={18} />
-                        <span style={{ fontSize: '0.88rem', fontWeight: 600 }}>
-                          {formData.upiScreenshotName ? formData.upiScreenshotName : 'Choose Screenshot Image File'}
-                        </span>
+                      <div className="dropzone-label">
+                        <Upload size={18} color="var(--color-primary)" />
+                        <span>{formData.upiScreenshotName ? `Attached: ${formData.upiScreenshotName}` : 'Click to attach payment receipt screenshot *'}</span>
                       </div>
                     </div>
                   </div>
                 </div>
               )}
 
-              {/* Order Total & Submit */}
-              <div className="modal-footer-summary">
-                <div>
-                  <div style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>Total Payable Amount</div>
-                  <div style={{ fontSize: '1.45rem', fontWeight: '700', color: 'var(--color-primary)' }}>₹{grandTotal.toLocaleString()}</div>
+              {/* Order Total Overview */}
+              <div className="checkout-summary-box">
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>
+                  <span>Subtotal:</span>
+                  <span>₹{subtotal.toLocaleString()}</span>
                 </div>
-
-                <button className="btn btn-primary" type="submit" disabled={loading} style={{ padding: '0.75rem 1.4rem' }}>
-                  <Send size={16} /> {loading ? 'Transmitting Order...' : 'Confirm & Dispatch'}
-                </button>
+                {discountAmount > 0 && (
+                  <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-primary)', fontSize: '0.9rem' }}>
+                    <span>Promo Discount:</span>
+                    <span>- ₹{discountAmount.toLocaleString()}</span>
+                  </div>
+                )}
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>
+                  <span>Shipping Fee:</span>
+                  <span>{shippingFee === 0 ? <strong style={{ color: 'var(--color-primary)' }}>FREE</strong> : `₹${shippingFee}`}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', color: '#fff', fontSize: '1.2rem', fontWeight: 700, paddingTop: '8px', borderTop: '1px solid rgba(255,255,255,0.08)' }}>
+                  <span>Total Amount Payable:</span>
+                  <span style={{ color: 'var(--color-primary)' }}>₹{grandTotal.toLocaleString()}</span>
+                </div>
               </div>
+
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={loading}
+                style={{ width: '100%', padding: '0.95rem', fontSize: '1rem', marginTop: 'var(--space-2)' }}
+              >
+                {loading ? 'Processing Order Submission...' : `Confirm Order (₹${grandTotal.toLocaleString()})`}
+              </button>
             </form>
           </div>
         ) : (
           <div style={{ textAlign: 'center', padding: 'var(--space-6) 0' }}>
-            <div
-              style={{
-                width: 76,
-                height: 76,
-                borderRadius: '50%',
-                background: 'rgba(16, 185, 129, 0.15)',
-                color: '#10b981',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginBottom: 'var(--space-4)',
-                border: '1px solid #10b981'
-              }}
-            >
-              <CheckCircle2 size={44} />
+            <div style={{ width: 68, height: 68, borderRadius: '50%', background: 'rgba(16, 185, 129, 0.15)', border: '2px solid #10b981', color: '#10b981', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto var(--space-4)' }}>
+              <CheckCircle2 size={36} />
             </div>
+            <h2 style={{ fontSize: '1.8rem', color: '#ffffff', marginBottom: 'var(--space-2)' }}>Order Received</h2>
+            <p className="section-label" style={{ fontSize: '0.85rem' }}>Reference: #{orderId}</p>
 
-            <h3 style={{ fontSize: '1.85rem', marginBottom: 'var(--space-2)' }}>Harvest Order Confirmed!</h3>
-
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '1rem', marginBottom: 'var(--space-4)' }}>
-              Your order reference code is <strong style={{ color: 'var(--color-primary)' }}>#{orderId}</strong>.
+            <p style={{ color: 'var(--color-text-muted)', maxWidth: '28rem', margin: 'var(--space-4) auto var(--space-6)', lineHeight: '1.6' }}>
+              Thank you for ordering with Zaafraan Estate. Your order details have been dispatched to our Kashmir desk. A confirmation receipt has been sent to <strong>{formData.email}</strong>.
             </p>
 
-            <div
-              style={{
-                background: 'rgba(255, 255, 255, 0.03)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: 'var(--radius-md)',
-                padding: 'var(--space-4)',
-                marginBottom: 'var(--space-6)',
-                fontSize: '0.88rem',
-                color: '#e2e8f0',
-                textAlign: 'left'
-              }}
-            >
-              <p style={{ margin: '0 0 6px' }}><strong>Dispatch Status:</strong> Order details & payment record transmitted to Pampore Estate.</p>
-              <p style={{ margin: 0 }}><strong>Email Receipt:</strong> Confirmation receipt & tracking update will be sent to <span style={{ color: 'var(--color-primary)' }}>{formData.email}</span>.</p>
+            <div style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', padding: 'var(--space-4)', borderRadius: 'var(--radius-md)', textAlign: 'left', maxWidth: '28rem', margin: '0 auto var(--space-6)', fontSize: '0.88rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '6px' }}>
+                <span style={{ color: 'var(--color-text-muted)' }}>Payment Method:</span>
+                <span style={{ color: '#fff', fontWeight: 600 }}>{formData.paymentMethod === 'upi' ? 'UPI Transfer' : 'Cash On Delivery'}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                <span style={{ color: 'var(--color-text-muted)' }}>Amount Payable:</span>
+                <span style={{ color: 'var(--color-primary)', fontWeight: 700 }}>₹{grandTotal.toLocaleString()}</span>
+              </div>
             </div>
 
-            <button className="btn btn-outline" onClick={closeCheckout}>
-              Return to Estate
+            <button className="btn btn-primary" onClick={closeCheckout}>
+              Done & Return to Estate
             </button>
           </div>
         )}
