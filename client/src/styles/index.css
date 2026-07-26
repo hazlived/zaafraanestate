@@ -2707,6 +2707,7 @@ html, body, #root, main, section, header, footer {
   .cart-drawer {
     width: 100vw;
     max-width: 100vw;
+    border-left: none;
   }
 
   .modal-box {
@@ -2715,6 +2716,47 @@ html, body, #root, main, section, header, footer {
     max-height: 90vh;
     overflow-y: auto;
   }
+}
+
+/* Tray Drawer Overlay & Smooth Sliding Animation */
+.cart-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cart-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 440px;
+  max-width: 100vw;
+  background: #0b0f14;
+  border-left: 1px solid var(--color-border);
+  box-shadow: -15px 0 45px rgba(0, 0, 0, 0.8), var(--shadow-glow);
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
+  transform: translateX(100%);
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.cart-overlay.is-open .cart-drawer,
+.cart-drawer.is-open {
+  transform: translateX(0) !important;
 }
 
 /* Custom UPI File Dropzone Styling */

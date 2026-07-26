@@ -25,8 +25,6 @@ export const CartDrawer = () => {
 
   const [inputCode, setInputCode] = useState('');
 
-  if (!isDrawerOpen) return null;
-
   const itemList = Object.values(items);
 
   const handleApplyPromo = (e) => {
@@ -42,8 +40,8 @@ export const CartDrawer = () => {
   };
 
   return ReactDOM.createPortal(
-    <div className="cart-overlay" onClick={closeDrawer}>
-      <div className="cart-drawer" onClick={(e) => e.stopPropagation()}>
+    <div className={`cart-overlay ${isDrawerOpen ? 'is-open' : ''}`} onClick={closeDrawer}>
+      <div className={`cart-drawer ${isDrawerOpen ? 'is-open' : ''}`} onClick={(e) => e.stopPropagation()}>
         <div className="cart-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-2)' }}>
             <ShoppingBag size={20} color="var(--color-primary)" />

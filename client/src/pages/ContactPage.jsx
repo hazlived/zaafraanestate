@@ -147,7 +147,7 @@ export const ContactPage = () => {
                     type="text"
                     name="fullName"
                     required
-                    placeholder="Ahmad Shah"
+                    placeholder="Rahul Sharma"
                     value={formData.fullName}
                     onChange={handleChange}
                   />

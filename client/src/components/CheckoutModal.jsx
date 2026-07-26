@@ -176,7 +176,7 @@ export const CheckoutModal = () => {
               <div className="modal-grid-2col">
                 <div className="form-group">
                   <label>Full Name *</label>
-                  <input type="text" name="name" required placeholder="Ahmad Zargar" value={formData.name} onChange={handleChange} />
+                  <input type="text" name="name" required placeholder="Arjun Sharma" value={formData.name} onChange={handleChange} />
                 </div>
                 <div className="form-group">
                   <label>Phone Number (WhatsApp) *</label>
