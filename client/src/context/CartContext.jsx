@@ -116,7 +116,9 @@ export const CartProvider = ({ children }) => {
 
   let shippingFee = 0;
   if (subtotal > 0) {
-    if (promoCode === 'PURESAFFRON') {
+    if (subtotal >= 3000) {
+      shippingFee = 0;
+    } else if (promoCode === 'PURESAFFRON') {
       shippingFee = 21;
     } else if (promoCode === 'FRIENDS12') {
       shippingFee = 10;
