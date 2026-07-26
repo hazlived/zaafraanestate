@@ -104,11 +104,15 @@ export const CartProvider = ({ children }) => {
   const totalItemsCount = Object.values(items).reduce((acc, item) => acc + item.qty, 0);
   const subtotal = Object.values(items).reduce((acc, item) => acc + item.price * item.qty, 0);
 
-  // Discount & Shipping Fee Calculation
-  let discountAmount = 0;
+  // Automatic ₹375 Discount for orders above ₹5,000
+  const autoDiscountAmount = subtotal > 5000 ? 375 : 0;
+
+  let promoDiscountAmount = 0;
   if (promoCode === 'FRIENDS12' && subtotal > 0) {
-    discountAmount = Math.round(subtotal * 0.12);
+    promoDiscountAmount = Math.round(subtotal * 0.12);
   }
+
+  const discountAmount = autoDiscountAmount + promoDiscountAmount;
 
   let shippingFee = 0;
   if (subtotal > 0) {
@@ -137,6 +141,7 @@ export const CartProvider = ({ children }) => {
         removePromo,
         totalItemsCount,
         subtotal,
+        autoDiscountAmount,
         discountAmount,
         shippingFee,
         grandTotal,

@@ -5,7 +5,7 @@ import { submitOrder } from '../services/api';
 import { X, CheckCircle2, ShieldCheck, QrCode, Upload, Copy, Check, AlertCircle, Send, Truck, ChevronDown, ChevronUp } from 'lucide-react';
 
 export const CheckoutModal = () => {
-  const { isCheckoutOpen, closeCheckout, items, subtotal, discountAmount, shippingFee, grandTotal, clearCart } = useCart();
+  const { isCheckoutOpen, closeCheckout, items, subtotal, autoDiscountAmount, discountAmount, shippingFee, grandTotal, clearCart } = useCart();
   const [step, setStep] = useState('form'); // 'form' | 'success'
   const [orderId, setOrderId] = useState('');
   const [loading, setLoading] = useState(false);
@@ -331,7 +331,7 @@ export const CheckoutModal = () => {
                 </div>
                 {discountAmount > 0 && (
                   <div style={{ display: 'flex', justifyContent: 'space-between', color: 'var(--color-primary)', fontSize: '0.9rem' }}>
-                    <span>Promo Discount:</span>
+                    <span>Total Discount:</span>
                     <span>- ₹{discountAmount.toLocaleString()}</span>
                   </div>
                 )}
@@ -344,6 +344,16 @@ export const CheckoutModal = () => {
                   <span style={{ color: 'var(--color-primary)' }}>₹{grandTotal.toLocaleString()}</span>
                 </div>
               </div>
+
+              {autoDiscountAmount > 0 ? (
+                <div style={{ fontSize: '0.78rem', color: 'var(--color-primary)', background: 'rgba(243, 194, 122, 0.08)', padding: '6px 12px', borderRadius: 'var(--radius-md)', border: '1px solid rgba(243, 194, 122, 0.2)', textAlign: 'center' }}>
+                  ✨ Automatic ₹375 Reserve Discount applied (orders above ₹5,000)
+                </div>
+              ) : subtotal > 0 && subtotal <= 5000 ? (
+                <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', textAlign: 'center' }}>
+                  💡 Add <strong style={{ color: 'var(--color-primary)' }}>₹{(5000 - subtotal).toLocaleString()}</strong> more to get an automatic <strong style={{ color: 'var(--color-primary)' }}>₹375 off</strong>!
+                </div>
+              ) : null}
 
               <button
                 type="submit"

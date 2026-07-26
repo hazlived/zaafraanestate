@@ -12,6 +12,7 @@ export const CartDrawer = () => {
     updateQuantity,
     removeItem,
     subtotal,
+    autoDiscountAmount,
     discountAmount,
     shippingFee,
     grandTotal,
@@ -146,6 +147,17 @@ export const CartDrawer = () => {
                   <span style={{ color: 'var(--color-primary)' }}>₹{grandTotal.toLocaleString()}</span>
                 </div>
               </div>
+
+              {autoDiscountAmount > 0 ? (
+                <div style={{ fontSize: '0.78rem', color: 'var(--color-primary)', background: 'rgba(243, 194, 122, 0.1)', padding: '6px 12px', borderRadius: 'var(--radius-md)', border: '1px solid rgba(243, 194, 122, 0.25)', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  <Tag size={13} />
+                  <span>Automatic ₹375 Reserve Discount applied (orders above ₹5,000)</span>
+                </div>
+              ) : subtotal > 0 && subtotal <= 5000 ? (
+                <div style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', background: 'rgba(255, 255, 255, 0.03)', padding: '6px 12px', borderRadius: 'var(--radius-md)', border: '1px solid rgba(255, 255, 255, 0.06)' }}>
+                  💡 Add <strong style={{ color: 'var(--color-primary)' }}>₹{(5000 - subtotal).toLocaleString()}</strong> more to get an automatic <strong style={{ color: 'var(--color-primary)' }}>₹375 off</strong>!
+                </div>
+              ) : null}
 
               <button className="btn btn-primary" style={{ width: '100%', padding: '0.85rem' }} onClick={openCheckout}>
                 Proceed to Checkout <ArrowRight size={18} />
